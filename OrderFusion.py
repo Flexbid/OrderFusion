@@ -1061,16 +1061,7 @@ def live_plot_sliding_window(y_pred_list, y_test_original, window_size, stop_ind
 
 
 def create_gif_from_images(image_dir, output_path, prefix="", duration=0.01, size=None):
-    """
-    Create a GIF from images in a directory.
 
-    Args:
-        image_dir (str): Path to folder containing images.
-        output_path (str): Path to save the output GIF.
-        prefix (str): Optional filename prefix to filter (e.g., 'ID3_').
-        duration (float): Duration per frame in seconds.
-        size (tuple): Optional (width, height) to resize all frames to same size.
-    """
     image_files = [os.path.join(image_dir, f) for f in os.listdir(image_dir)
                    if f.endswith(".png") and f.startswith(prefix)]
     image_files = natsorted(image_files)
@@ -1099,7 +1090,6 @@ def gif_conversion(indice):
         duration=0.0005,
         size=target_size  # 👈 Make all frames same size
     )
-
 
 
 def execute_main(data_config, model_config, phase):

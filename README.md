@@ -1,5 +1,5 @@
 # OrderFusion
-Encoding Orderbook for End-to-End Probabilistic Forecasting of Intraday Electricity Price
+Encoding Orderbook for End-to-End Probabilistic Intraday Electricity Price Forecasting
 
 🦊 Summary page: https://runyao-yu.github.io/OrderFusion/
 
