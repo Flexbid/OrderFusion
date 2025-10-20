@@ -16,77 +16,44 @@ Encoding Orderbook for End-to-End Probabilistic Intraday Electricity Price Forec
 We open-source all code for preprocessing, modeling, and analysis.  
 The project directory is structured as follows:
 
-    OrderFusion/
-    ├── Data/
-        |- Country (e.g. Germany)
-            |- Intraday Continuous
-                |- Orders
-                    |- Year (e.g. 2023)
-                        |- Month (e.g. 01)
-                        |- Month (e.g. 02)
-                        |- Month (e.g. 03)
-                        ...
+
+├── Data/
+    |- Country (e.g. Germany)
+        |- Intraday Continuous
+            |- Orders
+                |- Year (e.g. 2023)
+                    |- Month (e.g. 01)
+                    |- Month (e.g. 02)
+                    |- Month (e.g. 03)
                     ...
-    ├── Figure/
-    ├── Model/
-    ├── Result/
-    ├── OrderFusion.py
-    ├── Main.py
-    ├── Tutorial.ipynb
-    ├── README.md
-
-The file `README.md` specifies the required package versions.
-
-To facilitate reproducibility and accessibility, we have streamlined the entire pipeline into just three simple steps:
-
-### ✅ Step 1: Prepare the Folder Structure
-Place the purchased orderbook data into `Data` folder. Purchase source: https://webshop.eex-group.com/epex-spot-public-market-data (Several data types are available. For example, the “Continuous
-Anonymous Orders History” for Germany costs 325 EUR/month.)
-
-### ✅ Step 2: Run the Pipeline
-
-Run `Main.py` to:
-- Process the orderbook data
-- Train, validate, and test the OrderFusion model
-
-The script `OrderFusion.py` contains all necessary functions and classes.
-
-### ✅ Step 3: Check Results
-
-After execution, check:
-- `Model/` for saved model weights  
-- `Result/` for evaluation metrics and outputs
-- `Figure/` for checking forecasts versus true price
-
-### ✅ Optional: Run the Tutorial.ipynb
-
-To better understand how to use our codes:
-- Phase 1: `prepare`
-- Phase 2: `train`
-- Phase 3: `inference`
+                ...
+├── OrderFusion/
+    ├── data.py/
+    ├── model.py/
+    ├── evaluation.py/
+├── Figure/
+├── Model/
+├── Tutorial.ipynb
+├── requirement.txt
+├── README.md
 
 
----
+The file `requirement.txt` specifies the required package versions.
 
+To facilitate reproducibility and accessibility, we have streamlined the entire pipeline into just few simple steps:
 
-## 📦 Environment & Dependencies
+### ✅ Step 1: prepare the folder structure
+Place the purchased orderbook data into `Data` folder. Purchase source: https://webshop.eex-group.com/epex-spot-public-market-data (Several data types are available. For example, the “Continuous Anonymous Orders History” for Germany costs 325 EUR/month.)
 
-This project has been tested with the following environment:
+### ✅ Step 2: pip install the tools
 
-- **Python 3.9.20**
-- `numpy==1.25.2`
-- `pandas==2.1.4`
-- `scikit-learn==1.5.1`
-- `tensorflow==2.16.2`
-- `protobuf>=3.19.0`
-- `h5py>=3.1.0`
-- `joblib`
-- `setuptools`
-- `tqdm`
-- `natsort`
+Run `pip install OrderFusion` in your notebook.
 
-Use the following comment to pip install:
+### ✅ Step 3: run the tools
 
-```bash
-pip install numpy==1.25.2 pandas==2.1.4 scikit-learn==1.5.1 scipy==1.13.1 tensorflow==2.16.2 protobuf>=3.19.0 h5py>=3.1.0 joblib setuptools tqdm natsort
+Go through `Tutorial.ipynb` to understand the usage, e.g.:
+- `OrderFusion.read_data()` to read data;
+- `OrderFusion.optimize_model()` to train and optimize model;
+- `OrderFusion.evaluate_model()` to produce various testing metrics;
+- `OrderFusion.plot_forecasts()` to generate figure of forecasts.
 
