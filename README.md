@@ -28,9 +28,9 @@ The project directory is structured as follows:
                         ...
                     ...
     ├── OrderFusion/
-        ├── data.py/
-        ├── model.py/
-        ├── evaluation.py/
+        ├── data.py
+        ├── model.py
+        ├── evaluation.py
     ├── Figure/
     ├── Model/
     ├── Tutorial.ipynb
