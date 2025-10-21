@@ -33,8 +33,11 @@ The project directory is structured as follows:
 To facilitate reproducibility and accessibility, we have streamlined the entire pipeline into just few simple steps:
 
 ⚡️ (1) Create empty folders `Data`, `Figure` and `Model` inside parent folder;
+
 ⚡️ (2) Place the purchased orderbook data into `Data` folder. Purchase source: https://webshop.eex-group.com/epex-spot-public-market-data (Several data types are available. For example, the “Continuous Anonymous Orders History” for Germany costs 325 EUR/month.);
+
 ⚡️ (3) Create your empty notebook ends with `.ipynb`;
+
 ⚡️ (4) Run `pip install OrderFusion` in your notebook;
 
 Go through `Tutorial.ipynb` to understand the usage, e.g.:
