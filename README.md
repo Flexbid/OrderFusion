@@ -12,41 +12,30 @@ Encoding Orderbook for End-to-End Probabilistic Intraday Electricity Price Forec
 
 
 ## 🚀 Quick Start
-
-We open-source all code for preprocessing, modeling, and analysis.  
+ 
 The project directory is structured as follows:
 
 
-    ├── Data/
-        |- Country (e.g. Germany)
-            |- Intraday Continuous
-                |- Orders
-                    |- Year (e.g. 2023)
-                        |- Month (e.g. 01)
-                        |- Month (e.g. 02)
-                        |- Month (e.g. 03)
-                        ...
-                    ...
-    ├── OrderFusion/
-        ├── data.py
-        ├── model.py
-        ├── evaluation.py
-    ├── Figure/
-    ├── Model/
-    ├── Tutorial.ipynb
-    ├── requirement.txt
-    ├── README.md
+```text
+├── Data/
+│   └── Country (e.g. Germany)/
+│       └── Intraday Continuous/
+│           └── Orders/
+│               └── Year (e.g. 2023)/
+│                   ├── Month (e.g. 01)/
+│                   ├── Month (e.g. 02)/
+│                   ├── Month (e.g. 03)/
+│                   └── ...
+├── Figure/
+├── Model/
+├── Your_notebook.ipynb
 
 To facilitate reproducibility and accessibility, we have streamlined the entire pipeline into just few simple steps:
 
-### ✅ Step 1: prepare the folder structure
-Place the purchased orderbook data into `Data` folder. Purchase source: https://webshop.eex-group.com/epex-spot-public-market-data (Several data types are available. For example, the “Continuous Anonymous Orders History” for Germany costs 325 EUR/month.)
-
-### ✅ Step 2: pip install OrderFusion
-
-Run `pip install OrderFusion` in your notebook.
-
-### ✅ Step 3: run OrderFusion
+- Create empty folders called `Data`, `Figure` and `Model` inside parent folder;
+- Place the purchased orderbook data into `Data` folder. Purchase source: https://webshop.eex-group.com/epex-spot-public-market-data (Several data types are available. For example, the “Continuous Anonymous Orders History” for Germany costs 325 EUR/month.);
+- Create your empty notebook ends with `.ipynb`;
+- Simply run `pip install OrderFusion` in your notebook;
 
 Go through `Tutorial.ipynb` to understand the usage, e.g.:
 - `OrderFusion.read_data()` to read data;
@@ -56,9 +45,11 @@ Go through `Tutorial.ipynb` to understand the usage, e.g.:
 
 ## 💾 Installation Requirements
 
-The file **`requirements.txt`** lists all dependencies with fixed versions used in this project. 
+Running the `pip install OrderFusion` automatically install the required 
+packages. The detailed information is as follows:
 
-The **recommended Python version is 3.10**, since TensorFlow 2.16.2 officially supports only Python 3.10 – 3.11. Running the `pip install OrderFusion` automatically install the required packages.
+- The file **`requirements.txt`** lists all dependencies with fixed versions used in this project. 
+- The **recommended Python version is 3.10**, since TensorFlow 2.16.2 officially supports only Python 3.10 – 3.11. 
 
 ### Required Packages
 
