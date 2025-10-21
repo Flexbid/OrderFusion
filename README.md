@@ -37,9 +37,6 @@ The project directory is structured as follows:
     ├── requirement.txt
     ├── README.md
 
-
-The file `requirement.txt` specifies the required package versions.
-
 To facilitate reproducibility and accessibility, we have streamlined the entire pipeline into just few simple steps:
 
 ### ✅ Step 1: prepare the folder structure
@@ -57,3 +54,23 @@ Go through `Tutorial.ipynb` to understand the usage, e.g.:
 - `OrderFusion.evaluate_model()` to produce various testing metrics;
 - `OrderFusion.plot_forecasts()` to generate figure of forecasts.
 
+## 💾 Installation Requirements
+
+The file **`requirements.txt`** lists all dependencies with fixed versions used in this project. 
+
+The **recommended Python version is 3.10**, since TensorFlow 2.16.2 officially supports only Python 3.10 – 3.11. Running the `pip install OrderFusion` automatically install the required packages.
+
+### Required Packages
+
+```txt
+tensorflow==2.16.2
+numpy==1.26.4
+pandas==2.2.2
+scikit-learn==1.5.2
+matplotlib==3.7.0
+imageio==2.26.0
+Pillow==10.4.0
+joblib==1.4.2
+natsort==8.4.0
+tqdm==4.66.5
+ipython==8.10.0
