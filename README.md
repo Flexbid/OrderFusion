@@ -16,19 +16,19 @@ Encoding Orderbook for End-to-End Probabilistic Intraday Electricity Price Forec
 The project directory is structured as follows:
 
 
-```text
-├── Data/
-│   └── Country (e.g. Germany)/
-│       └── Intraday Continuous/
-│           └── Orders/
-│               └── Year (e.g. 2023)/
-│                   ├── Month (e.g. 01)/
-│                   ├── Month (e.g. 02)/
-│                   ├── Month (e.g. 03)/
-│                   └── ...
-├── Figure/
-├── Model/
-├── Your_notebook.ipynb
+
+    ├── Data/
+    │   └── Country (e.g. Germany)/
+    │       └── Intraday Continuous/
+    │           └── Orders/
+    │               └── Year (e.g. 2023)/
+    │                   ├── Month (e.g. 01)/
+    │                   ├── Month (e.g. 02)/
+    │                   ├── Month (e.g. 03)/
+    │                   └── ...
+    ├── Figure/
+    ├── Model/
+    ├── Your_notebook.ipynb
 
 To facilitate reproducibility and accessibility, we have streamlined the entire pipeline into just few simple steps:
 
@@ -50,8 +50,7 @@ packages. The detailed information is as follows:
 
 - The file **`requirements.txt`** lists all dependencies with fixed versions used in this project. 
 - The **recommended Python version is 3.10**, since TensorFlow 2.16.2 officially supports only Python 3.10 – 3.11. 
-
-### Required Packages
+- Required Packages:
 
 ```txt
 tensorflow==2.16.2
