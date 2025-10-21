@@ -32,10 +32,10 @@ The project directory is structured as follows:
 
 To facilitate reproducibility and accessibility, we have streamlined the entire pipeline into just few simple steps:
 
-- Create empty folders called `Data`, `Figure` and `Model` inside parent folder;
-- Place the purchased orderbook data into `Data` folder. Purchase source: https://webshop.eex-group.com/epex-spot-public-market-data (Several data types are available. For example, the “Continuous Anonymous Orders History” for Germany costs 325 EUR/month.);
-- Create your empty notebook ends with `.ipynb`;
-- Simply run `pip install OrderFusion` in your notebook;
+⚡️ (1) Create empty folders `Data`, `Figure` and `Model` inside parent folder;
+⚡️ (2) Place the purchased orderbook data into `Data` folder. Purchase source: https://webshop.eex-group.com/epex-spot-public-market-data (Several data types are available. For example, the “Continuous Anonymous Orders History” for Germany costs 325 EUR/month.);
+⚡️ (3) Create your empty notebook ends with `.ipynb`;
+⚡️ (4) Run `pip install OrderFusion` in your notebook;
 
 Go through `Tutorial.ipynb` to understand the usage, e.g.:
 - `OrderFusion.read_data()` to read data;
@@ -49,7 +49,7 @@ Running the `pip install OrderFusion` automatically install the required
 packages. The detailed information is as follows:
 
 - The file **`requirements.txt`** lists all dependencies with fixed versions used in this project. 
-- The **recommended Python version is 3.10**, since TensorFlow 2.16.2 officially supports only Python 3.10 – 3.11. 
+- The recommended **Python version** is **3.10**, since TensorFlow 2.16.2 officially supports only Python 3.10 – 3.11. 
 - Required Packages:
 
 ```txt
