@@ -5,7 +5,7 @@ Encoding Orderbook for End-to-End Probabilistic Intraday Electricity Price Forec
 
 🌋 Paper link: https://arxiv.org/pdf/2502.06830
 
-![Description of Image](Figure/model_structure.PNG)
+![Description of Image](static/images/OrderFusion_Structure.PNG)
 
 
 ---
