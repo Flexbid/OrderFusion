@@ -59,6 +59,44 @@ def compute_quantile_crossing_rate(y_pred_array):
     return crossing_rate
 
 
+
+def compute_interval_metrics(y_true, y_pred_array, quantiles):
+    """
+    Compute mean width and coverage for each symmetric quantile interval.
+    y_true:       array (n_samples,)
+    y_pred_array: array (n_samples, n_quantiles)
+    quantiles:    list of quantile levels (sorted ascending)
+    Returns:
+        dict of per-interval metrics + average metrics
+    """
+    results = {}
+    widths, coverages = [], []
+
+    # find symmetric quantile pairs (e.g. 0.1–0.9, 0.25–0.75)
+    for low_q in quantiles:
+        high_q = 1 - low_q
+        if low_q < 0.5 and high_q in quantiles:
+            i_low = quantiles.index(low_q)
+            i_high = quantiles.index(high_q)
+
+            y_low = y_pred_array[:, i_low]
+            y_high = y_pred_array[:, i_high]
+
+            width = np.mean(y_high - y_low)
+            coverage = np.mean((y_true >= y_low) & (y_true <= y_high))
+
+            results[f"Width_{low_q:.2f}-{high_q:.2f}"] = float(width)
+            results[f"Coverage_{low_q:.2f}-{high_q:.2f}_%"] = float(coverage * 100)
+
+            widths.append(width)
+            coverages.append(coverage)
+
+    results["AvgIntervalWidth"] = float(np.mean(widths)) if widths else np.nan
+    results["AvgCoverageRate_%"] = float(np.mean(coverages) * 100) if coverages else np.nan
+
+    return results
+
+
 def evaluate_model(best_model, X_test, y_test, quantiles, save_path, country, resolution):
 
     # Load scaler
@@ -101,9 +139,12 @@ def evaluate_model(best_model, X_test, y_test, quantiles, save_path, country, re
         'y_test_original': y_test_original,
         'y_pred_list': y_pred_list}
 
-    print(f"AQL: {results['avg_quantile_loss']}, AQCR: {results['quantile_crossing_rate']}, RMSE: {results['median_quantile_rmse']}, MAE: {results['median_quantile_mae']}, R2: {results['median_quantile_r2']}, Inference time: {inference_time}s \n")
+    interval_metrics = compute_interval_metrics(y_test_original, y_pred_array, quantiles)
+    results.update(interval_metrics)
+
+    print(f"AQL: {results['avg_quantile_loss']}, AQCR: {results['quantile_crossing_rate']}, AIW: {results['AvgIntervalWidth']}, AICR: {results['AvgCoverageRate_%']}, RMSE: {results['median_quantile_rmse']}, MAE: {results['median_quantile_mae']}, R2: {results['median_quantile_r2']}, Inference time: {inference_time}s \n")
     
-    #return results
+    return results
 
 
 def quantile_loss(q, name):
@@ -114,8 +155,9 @@ def quantile_loss(q, name):
     return loss
 
 
-def load_best_model(quantiles, country, resolution, indice):
-    checkpoint_path = f"Model/OrderFusion_{country}_{resolution}_{indice}.keras"
+def load_best_model(quantiles, country, resolution, indice, save_path):
+    
+    checkpoint_path = os.path.join(save_path, f"Model/OrderFusion_{country}_{resolution}_{indice}.keras")
     quantiles = [int(q * 100) for q in quantiles]
     quantiles_dict = {f'q{q:02}': q / 100 for q in quantiles}
     custom_objects = {f'{name}_label': quantile_loss(q, name) for name, q in quantiles_dict.items()}
