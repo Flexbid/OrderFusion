@@ -1,6 +1,5 @@
 README.md
 setup.py
-OrderFusion/OrderFusion.py
 OrderFusion/__init__.py
 OrderFusion/data.py
 OrderFusion/evaluation.py

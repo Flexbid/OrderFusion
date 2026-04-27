@@ -1,4 +1,7 @@
+import io
 import os
+import zipfile
+
 import joblib
 import glob
 import numpy as np
@@ -34,8 +37,8 @@ def add_traded_volume(df):
 
 
 def filter_data(country, year):
-    base_path = f"Data/{country}/Intraday Continuous/Orders"
-    
+    base_path = f"/Volumes/DATA/01_EPEX/Orders RAW"
+
     # Only load these columns from CSV
     necessary_columns = [
         'DeliveryStart',
@@ -107,7 +110,7 @@ def filter_data(country, year):
 
 
 def filter_data(country, start_date, end_date):  # CHANGED: signature -> dates not year
-    base_path = f"Data/{country}/Intraday Continuous/Orders"
+    base_path = f"/Volumes/DATA/01_EPEX/Orders RAW"
     necessary_columns = [
         'DeliveryStart',
         'Side',
@@ -154,13 +157,14 @@ def filter_data(country, start_date, end_date):  # CHANGED: signature -> dates n
                 for filename in filenames:
                     data_path = os.path.join(dirname, filename)
 
-                    # read CSV with only necessary columns
-                    df = pd.read_csv(
-                        data_path,
-                        header=1,
-                        dtype={'ParentId': 'Int64'},
-                        usecols=necessary_columns
-                    )
+                    print(f"Trying: {data_path}")
+                    print(f"  Exists: {os.path.exists(data_path)}")
+                    print(f"  Size: {os.path.getsize(data_path)} bytes")
+
+                    with zipfile.ZipFile(data_path, 'r') as zf:
+                        with zf.open(zf.namelist()[0]) as f:
+                            df = pd.read_csv(io.BytesIO(f.read()), header=1, dtype={'ParentId': 'Int64'},
+                                             usecols=necessary_columns)
 
                     # split into hour and quarter-hour subsets 
                     hour_df = df[df['Product'].isin(['Intraday_Hour_Power', 'XBID_Hour_Power'])]
@@ -383,10 +387,25 @@ def get_scaler(country, resolution, train_start_date, train_end_date):
     df.reset_index(drop=True, inplace=True)
 
     # Filter training data
-    df_train = df[(df['DeliveryStart'] >= train_start_date) & (df['DeliveryStart'] < train_end_date)]
+    start = pd.Timestamp(train_start_date, tz='UTC')
+    end = pd.Timestamp(train_end_date, tz='UTC') + pd.Timedelta(days=1)  # make end inclusive
+
+    df_train = df[(df['DeliveryStart'] >= start) & (df['DeliveryStart'] < end)]
 
     # Fit scaler on price values only
     scaler = RobustScaler()
+    print(f"df_train shape: {df_train.shape}")
+    print(f"df_train head:\n{df_train.head()}")
+    print(f"Price column null count: {df_train['Price'].isna().sum()}")
+    print(f"Date range in data: {df_train.index.min()} to {df_train.index.max()}")
+    print(f"Requested train range: {train_start_date} to {train_end_date}")
+    print(f"df before date filter shape: {df.shape}")
+    print(f"df DeliveryStart sample:\n{df['DeliveryStart'].head(10)}")
+    print(f"df DeliveryStart dtype: {df['DeliveryStart'].dtype}")
+    df['DeliveryStart'] = pd.to_datetime(df['DeliveryStart'])
+    print(f"train_start: {train_start_date}, type: {type(train_start_date)}")
+    print(f"train_end: {train_end_date}, type: {type(train_end_date)}")
+
     scaler.fit(df_train[['Price']].values)
 
     # Save the scaler
@@ -475,6 +494,12 @@ def scale_data(X_train, y_train, X_val, y_val, X_test, y_test, save_path, countr
     X_val_buy, X_val_sell = X_val
     X_test_buy, X_test_sell = X_test
 
+    print(f"X_train_buy length: {len(X_train_buy)}")
+    print(f"X_train_sell length: {len(X_train_sell)}")
+    print(f"X_val_buy length: {len(X_val_buy)}")
+    print(f"X_val_sell length: {len(X_val_sell)}")
+    print(f"X_test_buy length: {len(X_test_buy)}")
+    print(f"X_test_sell length: {len(X_test_sell)}")
     # Stack all sequences together for global fitting
     flat_train = np.vstack(X_train_buy + X_train_sell)
     

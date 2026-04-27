@@ -6,3 +6,8 @@ Data/*.pkl
 *.svg
 *.png
 __pycache__
+/analyze_modifications.py
+/Logging.md
+/Data/Germany/Continuous_Orders-DE-20210101-20210721T083257000Z_first382.csv.zip
+/Data/DOW30/Intraday_Hour_Power/Intraday_Hour_Power.2020-12-31
+/Data/
