@@ -37,7 +37,7 @@ def add_traded_volume(df):
 
 
 def filter_data(country, year):
-    base_path = f"/Volumes/DATA/01_EPEX/Orders RAW"
+    base_path = f"Data/{country}/Intraday Continuous/Orders"
 
     # Only load these columns from CSV
     necessary_columns = [
@@ -110,7 +110,7 @@ def filter_data(country, year):
 
 
 def filter_data(country, start_date, end_date):  # CHANGED: signature -> dates not year
-    base_path = f"/Volumes/DATA/01_EPEX/Orders RAW"
+    base_path = f"Data/{country}/Intraday Continuous/Orders"
     necessary_columns = [
         'DeliveryStart',
         'Side',
